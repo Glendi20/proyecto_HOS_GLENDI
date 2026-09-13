@@ -8,7 +8,7 @@
 | **Admin** | Principal | Tiene las mismas capacidades que Recepcionista sobre pacientes, como parte de su rol administrativo dentro del tenant. |
 | **Médico** | Secundario | Busca pacientes y consulta el detalle durante la atención clínica; no crea ni edita datos administrativos del paciente. |
 | **Enfermera** | Secundario | Igual que Médico: solo lectura sobre búsqueda y detalle de paciente. |
-| **Sistema (Tenant / Auth)** | Soporte | Middleware `tenant` y `jwt.auth` que valida `X-Tenant-ID` y el token JWT en cada operación, y aísla los datos por hospital. |
+| **Sistema (Tenant / Auth)** | Soporte | Middleware `tenant` y `jwt.auth` que valida `X-Tenant-ID` y el token JWT en cada operación, y aísla los datos por hospital.. |
 
 ## Narrativa de casos de uso
 

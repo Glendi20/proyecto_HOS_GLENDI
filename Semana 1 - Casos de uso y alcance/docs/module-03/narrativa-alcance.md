@@ -4,7 +4,7 @@
 
 El módulo **Pacientes** administra el ciclo de vida del registro administrativo del paciente dentro de un tenant (hospital): alta, edición, búsqueda y consulta de detalle. Es la fuente de verdad de los datos demográficos, de contacto y de seguro que usan el resto de módulos clínicos del HIS.
 
-Recepcionista y Admin registran y editan pacientes; el sistema genera un código único (`PAC-0001`) por tenant. Recepcionista, Admin, Médico y Enfermera pueden buscar pacientes (por nombre, DPI o código) y ver su detalle, que incluye un resumen de la admisión actual, alergias registradas y referencia al expediente médico.
+Recepcionista y Admin registran y editan pacientes; el sistema genera un código único (`PAC-0001`) por tenant. Recepcionista, Admin, Médico y Enfermera pueden buscar pacientes (por nombre, DPI o código) y ver su detalle, que incluye un resumen de la admisión actual, alergias registradas y referencia al expediente médico..
 
 ## Límites
 
