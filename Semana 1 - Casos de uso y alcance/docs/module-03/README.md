@@ -2,7 +2,7 @@
 
 Documentación de análisis y diseño del módulo de Pacientes del Sistema Hospitalario Integrado (ASII 2026).
 
-- **Estudiante:** Glendi Patricia Campos Orellana
+- **Estudiante:** Glendi Patricia Campos Orellana.
 - **GitHub:** `Glendi20`
 - **Rama:** `feature/asii-03-pacientes-glendi20`
 
