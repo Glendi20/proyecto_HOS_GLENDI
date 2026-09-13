@@ -16,4 +16,4 @@ Cada carpeta `Semana N` contiene la documentación y el código **nuevo o modifi
 
 ## Origen
 
-Contenido extraído de los commits de autoría de `Glendi campos <gcamposo@miumg.edu.gt>` / `Glendi20` en el repositorio `shi-asii-03-pacientes`, excluyendo los merges que integraban trabajo de otros compañeros de equipo.
+Contenido extraído de los commits de autoría de `Glendi campos <gcamposo@miumg.edu.gt>` / `Glendi20` en el repositorio `shi-asii-03-pacientes`.
