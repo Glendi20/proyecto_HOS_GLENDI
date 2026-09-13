@@ -1,0 +1,26 @@
+# Módulo 03 — Pacientes: registro, edición, búsqueda y detalle
+
+Documentación de análisis y diseño del módulo de Pacientes del Sistema Hospitalario Integrado (ASII 2026).
+
+- **Estudiante:** Glendi Patricia Campos Orellana
+- **GitHub:** `Glendi20`
+- **Rama:** `feature/asii-03-pacientes-glendi20`
+
+## Índice
+
+- [Narrativa y alcance](./narrativa-alcance.md) — semana 1
+- [Actores y casos de uso](./actores-casos-de-uso.md) — semana 1 (CU-01..CU-04)
+- [RF/RNF, criterios de aceptación y principio SOLID](./rf-rnf-solid.md) — semana 2
+- [Vista arquitectónica](./vista-arquitectonica.md) — semana 3
+
+## Actividad integradora de arquitectura federada (evolución, semana 4)
+
+Esta base de análisis se **evoluciona** — no se reemplaza — hacia la arquitectura
+federada CENTRAL/HOSPITAL exigida por la actividad "Actividad integradora de
+arquitectura federada y persistencia". Toda la entrega vertical (especificación
+ampliada, ADR, diagramas, código, pruebas, evidencia) vive en
+[`docs/modulos/mod03/`](../modulos/mod03/ESPECIFICACION.md):
+
+- [Especificación ampliada (CU-05, CU-06, RF-11..RF-19)](../modulos/mod03/ESPECIFICACION.md)
+- [ADR-001 — Arquitectura CENTRAL/HOSPITAL](../modulos/mod03/ADR-001-arquitectura.md)
+- [Diagramas (casos de uso, clases, secuencia, componentes, ER)](../modulos/mod03/diagramas/)
