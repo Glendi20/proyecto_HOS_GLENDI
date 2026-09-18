@@ -13,6 +13,8 @@ Cada carpeta `Semana N` contiene la documentación y el código **nuevo o modifi
 | [`Semana 3 - Vista arquitectonica`](<Semana 3 - Vista arquitectonica>) | 3 | Vista arquitectónica del módulo (avances). |
 | [`Semana 4 - Arquitectura por capas y patron Repository`](<Semana 4 - Arquitectura por capas y patron Repository>) | 4 | Implementación completa por capas (Domain/Application/Infrastructure/Http), patrón Repository, migraciones, seeders y pruebas automatizadas. |
 | [`Semana 5 - Sincronizacion MPI y evidencia`](<Semana 5 - Sincronizacion MPI y evidencia>) | 5 | Contrato API, configuración de tenancy, ADR actualizado y evidencia de ejecución. |
+| [`Semana 6 - Defensa de arquitectura y cambio practico`](<Semana 6 - Defensa de arquitectura y cambio practico>) | 6 | Primera evaluación parcial: informe de defensa, banco de preguntas, matriz decisión-evidencia y análisis del cambio práctico (rol `AuditorMPI`). |
+| [`Semana 7 - Componentes y refactorizacion`](<Semana 7 - Componentes y refactorizacion>) | 7 | Diseño de componentes backend/frontend y refactor real del punto de mayor acoplamiento (`PatientExceptionResponder`), con antes/después y prueba dedicada. |
 
 ## Origen
 
