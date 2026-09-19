@@ -15,6 +15,10 @@ Cada carpeta `Semana N` contiene la documentación y el código **nuevo o modifi
 | [`Semana 5 - Sincronizacion MPI y evidencia`](<Semana 5 - Sincronizacion MPI y evidencia>) | 5 | Contrato API, configuración de tenancy, ADR actualizado y evidencia de ejecución. |
 | [`Semana 6 - Defensa de arquitectura y cambio practico`](<Semana 6 - Defensa de arquitectura y cambio practico>) | 6 | Primera evaluación parcial: informe de defensa, banco de preguntas, matriz decisión-evidencia y análisis del cambio práctico (rol `AuditorMPI`). |
 | [`Semana 7 - Componentes y refactorizacion`](<Semana 7 - Componentes y refactorizacion>) | 7 | Diseño de componentes backend/frontend y refactor real del punto de mayor acoplamiento (`PatientExceptionResponder`), con antes/después y prueba dedicada. |
+| [`Semana 8 - Flujo UX por rol y wireframes`](<Semana 8 - Flujo UX por rol y wireframes>) | 8 | Flujo de experiencia de usuario por rol (estados de carga, vacío, error, éxito) y wireframes iniciales sobre el contrato ya implementado. |
+| [`Semana 9 - Usabilidad y accesibilidad`](<Semana 9 - Usabilidad y accesibilidad>) | 9 | Checklist de usabilidad/accesibilidad aplicado al flujo de la semana 8 y hallazgos priorizados. |
+| [`Semana 10 - Diseno responsive y movil`](<Semana 10 - Diseno responsive y movil>) | 10 | Adaptación responsive/móvil del flujo principal, incluyendo el escenario de conectividad intermitente propio del módulo. |
+| [`Semana 11 - Prototipo navegable`](<Semana 11 - Prototipo navegable>) | 11 | Prototipo HTML navegable (autocontenido, sin backend) del flujo de Pacientes. |
 
 ## Origen
 
