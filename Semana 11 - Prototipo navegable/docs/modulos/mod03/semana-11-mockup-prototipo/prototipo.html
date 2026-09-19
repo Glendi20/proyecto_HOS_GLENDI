@@ -1,0 +1,755 @@
+<title>Pacientes SHI</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink: #17221d;
+    --ink-soft: #46554d;
+    --bg: #eef2ef;
+    --surface: #ffffff;
+    --surface-2: #f6f8f6;
+    --line: #d6ddd8;
+    --accent: #0e6b5c;
+    --accent-ink: #ffffff;
+    --accent-soft: #dcece7;
+    --accent-soft-ink: #0a4d42;
+    --ok: #1e7a4c;
+    --ok-soft: #e2f3e8;
+    --warn: #92600f;
+    --warn-soft: #faead1;
+    --review: #5f4098;
+    --review-soft: #eae4f6;
+    --danger: #b3261e;
+    --danger-soft: #fbe6e4;
+    --focus: #0e6b5c;
+    --shadow: 0 1px 2px rgba(23, 34, 29, 0.06), 0 6px 20px -8px rgba(23, 34, 29, 0.18);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #e9f0eb;
+      --ink-soft: #a9bab0;
+      --bg: #101613;
+      --surface: #182019;
+      --surface-2: #1d2620;
+      --line: #2b352e;
+      --accent: #4fbfa8;
+      --accent-ink: #0a2420;
+      --accent-soft: #1c3733;
+      --accent-soft-ink: #8fe0cd;
+      --ok: #6fce9a;
+      --ok-soft: #163223;
+      --warn: #e3ab55;
+      --warn-soft: #3a2c14;
+      --review: #b8a1e8;
+      --review-soft: #2c2440;
+      --danger: #f0a29c;
+      --danger-soft: #3a1e1c;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 24px -8px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ink: #e9f0eb;
+    --ink-soft: #a9bab0;
+    --bg: #101613;
+    --surface: #182019;
+    --surface-2: #1d2620;
+    --line: #2b352e;
+    --accent: #4fbfa8;
+    --accent-ink: #0a2420;
+    --accent-soft: #1c3733;
+    --accent-soft-ink: #8fe0cd;
+    --ok: #6fce9a;
+    --ok-soft: #163223;
+    --warn: #e3ab55;
+    --warn-soft: #3a2c14;
+    --review: #b8a1e8;
+    --review-soft: #2c2440;
+    --danger: #f0a29c;
+    --danger-soft: #3a1e1c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 6px 24px -8px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding-inline: 16px;
+  }
+
+  h1, h2, h3 { font-family: 'Archivo', 'IBM Plex Sans', sans-serif; text-wrap: balance; margin: 0; }
+  code, .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+  }
+  button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .app {
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-block: 20px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Barra superior */
+  .topbar {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 14px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-right: auto;
+  }
+  .brand__mark {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    background: var(--accent);
+    display: inline-block;
+    transform: translateY(-1px);
+  }
+  .brand__name { font-size: 17px; font-weight: 700; }
+  .brand__sub { font-size: 12px; color: var(--ink-soft); }
+
+  .field-inline {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .field-inline label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+  }
+  .field-inline select {
+    font: inherit;
+    font-size: 13px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+
+  .conn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px 6px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+  }
+  .conn__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+  .conn.is-down .conn__dot { background: var(--warn); }
+  .conn__label { font-size: 12px; font-weight: 500; }
+  .switch {
+    position: relative;
+    width: 34px;
+    height: 20px;
+    border-radius: 999px;
+    background: var(--line);
+    border: none;
+    padding: 0;
+    flex: none;
+  }
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--surface);
+    transition: transform .15s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,.3);
+  }
+  .conn.is-down .switch { background: var(--warn); }
+  .conn.is-down .switch::after { transform: translateX(14px); }
+
+  /* Layout principal: nav + panel */
+  .layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 720px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  .nav {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  @media (max-width: 720px) {
+    .nav { flex-direction: row; overflow-x: auto; }
+  }
+  .navlink {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+    background: none;
+    border: none;
+    border-radius: 7px;
+    padding: 9px 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .navlink:hover { background: var(--surface-2); color: var(--ink); }
+  .navlink[aria-current="page"] { background: var(--accent-soft); color: var(--accent-soft-ink); }
+  .navlink[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+  .navlink__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: .5; flex: none; }
+
+  .role-note {
+    font-size: 11px;
+    color: var(--ink-soft);
+    padding: 8px 10px 2px;
+    border-top: 1px solid var(--line);
+    margin-top: 4px;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 20px;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .panel__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .panel__head h2 { font-size: 18px; }
+  .panel__head p { margin: 4px 0 0; color: var(--ink-soft); font-size: 12.5px; max-width: 52ch; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 7px;
+    border: 1px solid transparent;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { filter: brightness(1.06); }
+  .btn-ghost { background: var(--surface-2); border-color: var(--line); color: var(--ink); }
+  .btn-ghost:hover { background: var(--accent-soft); }
+  .btn-danger-ghost { background: var(--surface-2); border-color: var(--line); color: var(--danger); }
+  .btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+  /* Búsqueda */
+  .searchbar { display: flex; gap: 8px; }
+  .searchbar input {
+    flex: 1;
+    font: inherit;
+    padding: 9px 12px;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--ink-soft);
+    font-weight: 600;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tbody tr:hover { background: var(--surface-2); }
+  .table-wrap { overflow-x: auto; }
+  .name-cell strong { display: block; }
+  .name-cell span { color: var(--ink-soft); font-size: 12px; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .pill-ok { background: var(--ok-soft); color: var(--ok); }
+  .pill-warn { background: var(--warn-soft); color: var(--warn); }
+  .pill-review { background: var(--review-soft); color: var(--review); }
+
+  .empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+    color: var(--ink-soft);
+    padding: 40px 20px;
+  }
+  .empty strong { color: var(--ink); font-size: 14px; }
+
+  .skeleton-row td { padding: 12px 10px; }
+  .skel {
+    height: 12px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--surface-2) 25%, var(--line) 37%, var(--surface-2) 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.3s ease infinite;
+  }
+  @media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
+  @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+  /* Formulario */
+  form.register { display: flex; flex-direction: column; gap: 14px; max-width: 480px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 480px) { .grid-2 { grid-template-columns: 1fr; } }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-size: 12.5px; font-weight: 600; }
+  .field .hint { font-size: 11.5px; color: var(--ink-soft); }
+  .field input, .field select {
+    font: inherit;
+    padding: 9px 10px;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+  .field.has-error input { border-color: var(--danger); }
+  .field-error { font-size: 11.5px; color: var(--danger); }
+  .form-actions { display: flex; gap: 10px; margin-top: 4px; }
+
+  .banner {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    border: 1px solid transparent;
+  }
+  .banner-ok { background: var(--ok-soft); color: var(--ok); border-color: color-mix(in srgb, var(--ok) 30%, transparent); }
+  .banner-warn { background: var(--warn-soft); color: var(--warn); border-color: color-mix(in srgb, var(--warn) 30%, transparent); }
+  .banner-review { background: var(--review-soft); color: var(--review); border-color: color-mix(in srgb, var(--review) 30%, transparent); }
+  .banner-danger { background: var(--danger-soft); color: var(--danger); border-color: color-mix(in srgb, var(--danger) 30%, transparent); }
+  .banner__body strong { display: block; color: var(--ink); font-size: 13.5px; margin-bottom: 2px; }
+  .banner__body p { margin: 0; color: var(--ink-soft); }
+  .banner code { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 4px; }
+
+  /* Revisión MPI */
+  .review-item {
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .review-item__head { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .candidate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--line);
+    border-radius: 7px;
+    padding: 8px 10px;
+    background: var(--surface-2);
+  }
+  .candidate + .candidate { margin-top: 6px; }
+  .candidate__score { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-soft); }
+  .candidate__fields { font-size: 11.5px; color: var(--ink-soft); }
+  .review-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
+  footer.meta {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 11.5px;
+    padding-top: 6px;
+  }
+</style>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true"></span>
+      <span class="brand__name">Pacientes</span>
+      <span class="brand__sub">Sistema Hospitalario Integrado</span>
+    </div>
+
+    <div class="field-inline">
+      <label for="hospitalSelect">Hospital</label>
+      <select id="hospitalSelect">
+        <option>Hospital General San Marcos</option>
+        <option>Clínica Santa Elena</option>
+      </select>
+    </div>
+
+    <div class="field-inline">
+      <label for="roleSelect">Rol activo</label>
+      <select id="roleSelect"></select>
+    </div>
+
+    <button class="conn" id="connToggle" type="button" aria-pressed="false">
+      <span class="conn__dot" aria-hidden="true"></span>
+      <span class="conn__label" id="connLabel">CENTRAL disponible</span>
+      <span class="switch" aria-hidden="true"></span>
+    </button>
+  </header>
+
+  <div class="layout">
+    <nav class="nav" aria-label="Secciones del módulo Pacientes">
+      <button class="navlink" data-screen="buscar" aria-current="page">
+        <span class="navlink__dot"></span> Buscar pacientes
+      </button>
+      <button class="navlink" data-screen="registrar">
+        <span class="navlink__dot"></span> Registrar paciente
+      </button>
+      <button class="navlink" data-screen="revisar">
+        <span class="navlink__dot"></span> Revisar coincidencias MPI
+      </button>
+      <p class="role-note" id="roleNote"></p>
+    </nav>
+
+    <main class="panel" id="panel" aria-live="polite"></main>
+  </div>
+
+  <footer class="meta">
+    Prototipo navegable — Módulo 03, semana 11 · Datos de ejemplo ficticios, sin información clínica real.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var ROLES = {
+    recepcionista: { label: 'Recepcionista', canWrite: true },
+    admin: { label: 'Admin', canWrite: true },
+    medico: { label: 'Médico', canWrite: false },
+    enfermera: { label: 'Enfermera', canWrite: false },
+  };
+
+  var PATIENTS = [
+    { code: 'PAC-9001', name: 'María López Pérez', dpi: '1234567890101', birth: '1990-05-14', status: 'auto_linked', global: 'f2a1…c90e' },
+    { code: 'PAC-9002', name: 'Carlos Hernández Ruiz', dpi: '—', birth: '1985-02-20', status: 'manual_review', global: null },
+    { code: 'PAC-0007', name: 'Ana Ramírez', dpi: '1111111111111', birth: '1995-06-01', status: 'auto_linked', global: 'b7d4…11aa' },
+    { code: 'PAC-0011', name: 'Diego Solís', dpi: '—', birth: '1975-09-09', status: 'pending', global: null },
+  ];
+
+  var CANDIDATES = [
+    { id: 'mpi-a', label: 'Identidad MPI · registrada en Clínica Santa Elena', score: 0.65, matched: 'fecha de nacimiento, nombre' },
+    { id: 'mpi-b', label: 'Identidad MPI · registrada en Hospital San Marcos (otra sucursal)', score: 0.65, matched: 'fecha de nacimiento, nombre' },
+  ];
+
+  var state = {
+    role: 'recepcionista',
+    screen: 'buscar',
+    centralDown: false,
+    searchLoading: false,
+    searchTerm: '',
+    formResult: null, // { status, code, global, matchId }
+    resolved: null,
+  };
+
+  var panel = document.getElementById('panel');
+  var roleSelect = document.getElementById('roleSelect');
+  var roleNote = document.getElementById('roleNote');
+  var connToggle = document.getElementById('connToggle');
+  var connLabel = document.getElementById('connLabel');
+
+  Object.keys(ROLES).forEach(function (key) {
+    var opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = ROLES[key].label;
+    roleSelect.appendChild(opt);
+  });
+  roleSelect.value = state.role;
+
+  function pillFor(status) {
+    var map = {
+      auto_linked: ['pill-ok', 'Vinculado (auto)'],
+      manual_review: ['pill-review', 'Revisión manual'],
+      pending: ['pill-warn', 'Pendiente de CENTRAL'],
+    };
+    var m = map[status] || ['pill-warn', status];
+    return '<span class="pill ' + m[0] + '">' + m[1] + '</span>';
+  }
+
+  function canWrite() { return ROLES[state.role].canWrite; }
+
+  function renderNav() {
+    document.querySelectorAll('.navlink').forEach(function (btn) {
+      var screen = btn.getAttribute('data-screen');
+      var locked = screen === 'registrar' || screen === 'revisar';
+      var disabled = locked && !canWrite();
+      // aria-disabled (no `disabled`) a propósito: el control sigue siendo
+      // alcanzable por teclado y un lector de pantalla anuncia el motivo real
+      // en vez de saltárselo en silencio (hallazgo de semana 9, ver
+      // docs/modulos/mod03/semana-09-usabilidad-accesibilidad/HALLAZGOS_MEJORAS.md).
+      btn.setAttribute('aria-disabled', String(disabled));
+      btn.title = disabled ? 'No disponible para el rol ' + ROLES[state.role].label + ' (solo lectura)' : '';
+      btn.removeAttribute('aria-current');
+      if (screen === state.screen) btn.setAttribute('aria-current', 'page');
+    });
+    roleNote.textContent = canWrite()
+      ? 'Este rol puede registrar y resolver coincidencias.'
+      : 'Este rol solo puede buscar y consultar (solo lectura).';
+  }
+
+  function screenBuscar() {
+    var rows = PATIENTS.filter(function (p) {
+      return p.name.toLowerCase().indexOf(state.searchTerm.toLowerCase()) !== -1
+        || p.code.toLowerCase().indexOf(state.searchTerm.toLowerCase()) !== -1;
+    });
+
+    var body;
+    if (state.searchLoading) {
+      body = '<div class="table-wrap"><table><tbody>' +
+        [0, 1, 2].map(function () {
+          return '<tr class="skeleton-row"><td colspan="5"><div class="skel" style="width:70%"></div></td></tr>';
+        }).join('') + '</tbody></table></div>';
+    } else if (rows.length === 0) {
+      body = '<div class="empty"><strong>Sin resultados</strong><span>Ningún paciente de este hospital coincide con &laquo;' +
+        (state.searchTerm || '') + '&raquo;. Prueba con el nombre, DPI o código.</span></div>';
+    } else {
+      body = '<div class="table-wrap"><table>' +
+        '<thead><tr><th>Paciente</th><th>Código</th><th>Nacimiento</th><th>Estado MPI</th><th class="mono">Global ID</th></tr></thead>' +
+        '<tbody>' + rows.map(function (p) {
+          return '<tr>' +
+            '<td class="name-cell"><strong>' + p.name + '</strong><span>DPI ' + p.dpi + '</span></td>' +
+            '<td class="mono">' + p.code + '</td>' +
+            '<td class="mono">' + p.birth + '</td>' +
+            '<td>' + pillFor(p.status) + '</td>' +
+            '<td class="mono">' + (p.global || '—') + '</td>' +
+            '</tr>';
+        }).join('') + '</tbody></table></div>';
+    }
+
+    return '' +
+      '<div class="panel__head">' +
+        '<div><h2>Buscar pacientes</h2><p>Resultados acotados a ' + document.getElementById('hospitalSelect').value + '. Disponible para todos los roles clínicos.</p></div>' +
+      '</div>' +
+      '<div class="searchbar">' +
+        '<label for="searchInput" class="visually-hidden">Buscar por nombre, DPI o código</label>' +
+        '<input id="searchInput" type="text" placeholder="Nombre, DPI o código…" value="' + state.searchTerm + '" />' +
+        '<button class="btn btn-ghost" id="btnReloadSearch" type="button">Actualizar</button>' +
+      '</div>' +
+      body;
+  }
+
+  function fieldError(id, msg) {
+    return '<p class="field-error" id="' + id + '">' + msg + '</p>';
+  }
+
+  function screenRegistrar() {
+    if (!canWrite()) {
+      return '<div class="empty"><strong>Sin permiso</strong><span>El rol ' + ROLES[state.role].label +
+        ' tiene acceso de solo lectura a Pacientes (ver docs/module-03/contrato-api.md, tabla de permisos).</span></div>';
+    }
+
+    var result = '';
+    if (state.formResult === 'auto_linked_new') {
+      result = '<div class="banner banner-ok"><div class="banner__body"><strong>Paciente registrado — vínculo automático</strong>' +
+        '<p>Código <code>PAC-0014</code>. No había coincidencias en el MPI: se creó una identidad nueva y quedó vinculada automáticamente. <code>global_id: a91c…44f0</code></p></div></div>';
+    } else if (state.formResult === 'manual_review') {
+      result = '<div class="banner banner-review"><div class="banner__body"><strong>Paciente registrado — revisión pendiente</strong>' +
+        '<p>Código <code>PAC-0014</code>. Se encontraron 2 posibles coincidencias en el MPI, ninguna dominante. Resuélvelo en <em>Revisar coincidencias MPI</em>.</p></div></div>';
+    } else if (state.formResult === 'pending') {
+      result = '<div class="banner banner-warn"><div class="banner__body"><strong>Paciente registrado localmente</strong>' +
+        '<p>Código <code>PAC-0014</code>. CENTRAL no respondió: el alta de tu hospital queda confirmada igual y el vínculo con el MPI se reintentará automáticamente más tarde.</p></div></div>';
+    } else if (state.formResult === 'duplicate') {
+      result = '<div class="banner banner-danger"><div class="banner__body"><strong>DPI ya registrado</strong>' +
+        '<p>Ya existe un paciente con DPI <code>1234567890101</code> en este hospital. Revisa <em>Buscar pacientes</em> antes de crear uno nuevo.</p></div></div>';
+    }
+
+    return '' +
+      '<div class="panel__head">' +
+        '<div><h2>Registrar paciente</h2><p>Alta local. El intento de vínculo con el MPI de CENTRAL ocurre automáticamente al guardar.</p></div>' +
+      '</div>' +
+      '<form class="register" id="registerForm" novalidate>' +
+        '<div class="grid-2">' +
+          '<div class="field"><label for="firstName">Nombres</label><input id="firstName" required></div>' +
+          '<div class="field"><label for="lastName">Apellidos</label><input id="lastName" required></div>' +
+        '</div>' +
+        '<div class="grid-2">' +
+          '<div class="field"><label for="birthDate">Fecha de nacimiento</label><input id="birthDate" type="date" required></div>' +
+          '<div class="field"><label for="gender">Género</label><select id="gender"><option value="F">F</option><option value="M">M</option><option value="otro">Otro</option></select></div>' +
+        '</div>' +
+        '<div class="field">' +
+          '<label for="dpi">DPI (opcional)</label>' +
+          '<input id="dpi" inputmode="numeric" placeholder="13 dígitos">' +
+          '<span class="hint">Déjalo vacío si el paciente aún no presenta DPI.</span>' +
+        '</div>' +
+        '<div class="form-actions">' +
+          '<button class="btn btn-primary" type="submit">Guardar paciente</button>' +
+          '<button class="btn btn-ghost" type="button" id="btnDuplicateDemo">Simular DPI duplicado</button>' +
+        '</div>' +
+      '</form>' +
+      result;
+  }
+
+  function screenRevisar() {
+    if (!canWrite()) {
+      return '<div class="empty"><strong>Sin permiso</strong><span>Solo Recepcionista/Admin resuelven coincidencias MPI.</span></div>';
+    }
+    if (state.resolved) {
+      return '<div class="banner banner-ok"><div class="banner__body"><strong>Coincidencia resuelta</strong>' +
+        '<p>' + state.resolved + '</p></div></div>' +
+        '<div class="empty"><strong>No hay más coincidencias pendientes</strong><span>Vuelve aquí cuando un nuevo registro quede en revisión manual.</span></div>';
+    }
+    return '' +
+      '<div class="panel__head">' +
+        '<div><h2>Revisar coincidencias MPI</h2><p>Nunca se fusiona sola: cada coincidencia ambigua espera una decisión explícita.</p></div>' +
+      '</div>' +
+      '<div class="review-item">' +
+        '<div class="review-item__head">' +
+          '<div><strong>Carlos Hernández Ruiz</strong> <span class="mono" style="color:var(--ink-soft)">· PAC-9002 · 1985-02-20</span></div>' +
+          pillFor('manual_review') +
+        '</div>' +
+        CANDIDATES.map(function (c) {
+          return '<div class="candidate"><div><div>' + c.label + '</div><div class="candidate__fields">Coincide en: ' + c.matched + '</div></div>' +
+            '<div class="candidate__score">score ' + c.score.toFixed(2) + '</div></div>';
+        }).join('') +
+        '<div class="review-actions">' +
+          '<button class="btn btn-primary" data-resolve="confirm">Confirmar identidad A</button>' +
+          '<button class="btn btn-danger-ghost" data-resolve="reject">Ninguna es correcta (crear nueva)</button>' +
+        '</div>' +
+      '</div>';
+  }
+
+  function render() {
+    connToggle.classList.toggle('is-down', state.centralDown);
+    connToggle.setAttribute('aria-pressed', String(state.centralDown));
+    connLabel.textContent = state.centralDown ? 'CENTRAL no disponible' : 'CENTRAL disponible';
+
+    renderNav();
+
+    var html;
+    if (state.screen === 'buscar') html = screenBuscar();
+    else if (state.screen === 'registrar') html = screenRegistrar();
+    else html = screenRevisar();
+
+    panel.innerHTML = html;
+    wirePanel();
+  }
+
+  function wirePanel() {
+    var searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', function (e) {
+        state.searchTerm = e.target.value;
+        render();
+        document.getElementById('searchInput').focus();
+        document.getElementById('searchInput').selectionStart = document.getElementById('searchInput').value.length;
+      });
+    }
+    var reload = document.getElementById('btnReloadSearch');
+    if (reload) {
+      reload.addEventListener('click', function () {
+        state.searchLoading = true;
+        render();
+        setTimeout(function () { state.searchLoading = false; render(); }, 500);
+      });
+    }
+    var form = document.getElementById('registerForm');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (state.centralDown) {
+          state.formResult = 'pending';
+        } else {
+          var dpi = document.getElementById('dpi').value.trim();
+          state.formResult = dpi === '9999999999999' ? 'manual_review' : 'auto_linked_new';
+        }
+        render();
+      });
+    }
+    var dupBtn = document.getElementById('btnDuplicateDemo');
+    if (dupBtn) {
+      dupBtn.addEventListener('click', function () {
+        state.formResult = 'duplicate';
+        render();
+      });
+    }
+    document.querySelectorAll('[data-resolve]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        state.resolved = btn.getAttribute('data-resolve') === 'confirm'
+          ? 'Se vinculó a Carlos Hernández Ruiz con la identidad MPI de Clínica Santa Elena. Ambos hospitales comparten ahora el mismo global_id.'
+          : 'No se fusionó con ningún candidato: se creó una identidad nueva en el MPI para Carlos Hernández Ruiz.';
+        render();
+      });
+    });
+  }
+
+  document.querySelectorAll('.navlink').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.getAttribute('aria-disabled') === 'true') return;
+      state.screen = btn.getAttribute('data-screen');
+      render();
+    });
+  });
+
+  roleSelect.addEventListener('change', function () {
+    state.role = roleSelect.value;
+    if (!canWrite() && state.screen !== 'buscar') state.screen = 'buscar';
+    render();
+  });
+
+  connToggle.addEventListener('click', function () {
+    state.centralDown = !state.centralDown;
+    render();
+  });
+
+  render();
+})();
+</script>
